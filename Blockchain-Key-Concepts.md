@@ -27,5 +27,9 @@
 * Alternatives such as proof of state are being researched codenamed Casper
 
 ### Crypto-currency
-* 
-
+* Need a mechanism to incentivize miners 
+* Any currency needs 6 properties:  
+  * Durable: Transaction Finality of the ledger
+  * Portable: Can easily move from wallet to wallet
+  * Acceptability: Trust in all the other five properties, and the ability to exchange cryptocurrency for fiat currency via an exchange
+  * Limited Supply: Only way to mint currency is through the consensus algorithm
