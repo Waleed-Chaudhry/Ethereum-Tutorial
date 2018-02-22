@@ -1,4 +1,4 @@
-## Design Goals
+# Design Goals
 
 ### Data Distribution
 * Each node in the system has access to all the data.
