@@ -56,3 +56,8 @@ Block chain stores a list of transactions packaged into ordered blocks
 * In June 2016, an attacker exploited a smart contract, which led to a fork. 
 * Ethereum now has two currencies. 
 * Ether with the majority with the attacker's transactions removed - ETH and Ethereum classic, ETC
+
+### Tricameral System
+* Developers: Write the actual code for the blockchain implementation. Most code is open source
+* Users: Use the implementation. Each user has a wallet, all you need to transfer coins to the user's account is the wallet address
+* Miners: The higher the processing power (hashrate), the higher your probablilty to win the consensus algorithm puzzle 
