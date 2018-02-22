@@ -28,8 +28,12 @@
 * Any node in the network can create and sign networks, after which they're in a pending state
 * Every 10 minutes, there is a competition to decide which node will append which transaction to the ledger 
 * The competition happens randomly based on the consensus algorithm 
-* The way it works is - here is a complex puzzle, the first one to find a solution will have to prove that it did solve it. If the solution is found to be correct, the node will decide which transactions get appended to the ledger
-* Transactions are grouped into blocks of transactions. This process is called mining.
+  * Consensus algorithm creates a complex puzzle which can be solved by any node
+  * The node that wins the consensus algorithm, will solve the puzzle
+  * It will then have to prove that it did solve it
+  * If the solution is found to be correct, the node will decide which transactions get appended to the ledger
+  * Transactions are grouped into blocks of transactions
+  * This process is called mining
 * The winner of the competition gets to include one special transaction in the block that creates an amount of bitcoin and assigns to himself
 * The amount is determined by the consensus algorithm. Currently it's 12.5 and gets divided by half every 2 years
 * This incentivizes the miners to not jeopardize the very currency their being paid in
