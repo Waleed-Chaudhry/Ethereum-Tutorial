@@ -32,4 +32,7 @@
   * Durable: Transaction Finality of the ledger
   * Portable: Can easily move from wallet to wallet
   * Acceptability: Trust in all the other five properties, and the ability to exchange cryptocurrency for fiat currency via an exchange
-  * Limited Supply: Only way to mint currency is through the consensus algorithm
+  * Limited Supply: Only way to mint currency is through the consensus algorithm as the reward for appending a block to the ledger. It's 12.5 bitcoins which halves every 2 years for Bitcoin, and 5 Ethers which stays constant for Ethereum.
+  * Divisbility: Can transact fractions of a bitcoin. The smallest unit in bitcoin is 1 Satoshi which is 10^-8 BTC. And the smallest in Ethereum is Wei which is 10^-18 ETH
+  * Fungibility: Each unit or Ether/BTC is equivalent to any other unit
+* Each 
