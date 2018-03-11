@@ -18,7 +18,9 @@ contract ChainList {
 
   // sell an article
   function sellArticle(string _name, string _description, uint256 _price) public {
-    seller = msg.sender; //seller is not passed into the sell
+    seller = msg.sender;
+    // seller is not passed into the contructor
+    // It is instead gathered from the "from" object used to call the sell Article function
     name = _name;
     description = _description;
     price = _price;
@@ -40,13 +42,13 @@ contract ChainList {
 }
 ```
 
-* Create deployment script
+* Create deployment in the file 2_deploy_contracts.js
 ```solidity
-var Migrations = artifacts.require("./Migrations.sol");
+var ChainList = artifacts.require("./ChainList.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Migrations);
-};
+  deployer.deploy(ChainList);
+}
 ```
 ### Connecting to Ganache
 Ganache uses network id 5777 and rpc endpoint 7545 as the default. Truffle develop uses network id 4447 and rpc endpoint 9545.
@@ -79,4 +81,61 @@ ChainList.deployed().then(function(instance) {app = instance;})
 ```javascript
 app.sellArticle("iPhone7", "Selling in order to buy iPhone 8", web3.toWei(3, "ether"), {from:web3.eth.accounts[1]})
 // from tells you the account that pays for the gas
+// Balance account[1] changes
 ```
+
+### Tests
+You can’t fix bugs in our contract once already deployed. You have to deploy a new instance of the contract. Therefore thoroughly testing your contract is very important. We'll focus on JavaScript testing, since Solidity testing is still recent.
+
+* Create a new file ChainListHappyPath.js inside the test directory
+```solidity
+var ChainList = artifacts.require("./ChainList.sol"); // Same as the deployment script
+
+// test suite
+contract('ChainList', function(accounts){
+  // function accounts gets a list of accounts of the node we're connected to
+  var chainListInstance;
+  var seller = accounts[1];
+  var articleName = "article 1";
+  var articleDescription = "Description for article 1";
+  var articlePrice = 10;
+
+  it("should be initialized with empty values", function() {
+    // The text is what the console will show 
+    return ChainList.deployed().then(function(instance) {
+      // Same as getting instance from the truffle console
+      return instance.getArticle();
+    }).then(function(data) { 
+      // Chain the promise to another function that receives the data of our initial function in object data
+      // Can then do assertions on the object data
+      assert.equal(data[0], 0x0, "seller must be empty");
+      assert.equal(data[1], "", "article name must be empty");
+      assert.equal(data[2], "", "article description must be empty");
+      assert.equal(data[3].toNumber(), 0, "article price must be zero");
+      console.log("data[3]=", data[3]) //Can log the output to the console
+    })
+  });
+
+  it("should sell an article", function() {
+    return ChainList.deployed().then(function(instance) {
+      chainListInstance = instance;
+      // Here we save the instance of the contract of the smart 
+      return chainListInstance.sellArticle(articleName, articleDescription, web3.toWei(articlePrice, "ether"), { from: seller});
+    }).then(function() {
+      return chainListInstance.getArticle();
+    }).then(function(data) {
+      assert.equal(data[0], seller, "seller must be " + seller);
+      assert.equal(data[1], articleName, "article name must be " + articleName);
+      assert.equal(data[2], articleDescription, "article description must be " + articleDescription);
+      assert.equal(data[3].toNumber(), web3.toWei(articlePrice, "ether"), "article price must be " + web3.toWei(articlePrice, "ether"));
+    });
+  });
+});
+```
+* Run the test suite
+```javascript
+truffle test --network ganache
+```
+
+We have to perform the tests on test environments because deploying and running tests costs gas  
+Restarting the 
