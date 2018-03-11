@@ -101,11 +101,11 @@ contract('ChainList', function(accounts){
   var articlePrice = 10;
 
   it("should be initialized with empty values", function() {
-    // The text is what the console will show 
+    // The text is what the console will show
     return ChainList.deployed().then(function(instance) {
       // Same as getting instance from the truffle console
       return instance.getArticle();
-    }).then(function(data) { 
+    }).then(function(data) {
       // Chain the promise to another function that receives the data of our initial function in object data
       // Can then do assertions on the object data
       assert.equal(data[0], 0x0, "seller must be empty");
@@ -119,10 +119,11 @@ contract('ChainList', function(accounts){
   it("should sell an article", function() {
     return ChainList.deployed().then(function(instance) {
       chainListInstance = instance;
-      // Here we save the instance of the contract of the smart 
+      // Here we save the instance of the smart contract
       return chainListInstance.sellArticle(articleName, articleDescription, web3.toWei(articlePrice, "ether"), { from: seller});
-    }).then(function() {
+    }).then(function() { // sellArticle doesn't actually return anything so no need to pass the data
       return chainListInstance.getArticle();
+      // the state of the contract has changed since we called sellArticle on it
     }).then(function(data) {
       assert.equal(data[0], seller, "seller must be " + seller);
       assert.equal(data[1], articleName, "article name must be " + articleName);
@@ -138,4 +139,4 @@ truffle test --network ganache
 ```
 
 We have to perform the tests on test environments because deploying and running tests costs gas  
-Restarting the 
+Restarting Ganache should reset all the account balances
